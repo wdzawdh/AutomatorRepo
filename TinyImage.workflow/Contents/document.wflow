@@ -71,7 +71,7 @@
 					<key>granularity</key>
 					<integer>0</integer>
 					<key>multipleSelection</key>
-					<true/>
+					<false/>
 					<key>promptMessage</key>
 					<string>选取“访达”项目：</string>
 				</dict>
@@ -172,168 +172,6 @@
 				<string>565.000000:153.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Ask for Finder Items.action/Contents/Resources/Base.lproj/main.nib</string>
-			</dict>
-			<key>isViewVisible</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>action</key>
-			<dict>
-				<key>AMAccepts</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Optional</key>
-					<false/>
-					<key>Types</key>
-					<array>
-						<string>com.apple.cocoa.path</string>
-					</array>
-				</dict>
-				<key>AMActionVersion</key>
-				<string>2.1.1</string>
-				<key>AMApplication</key>
-				<array>
-					<string>访达</string>
-				</array>
-				<key>AMParameterProperties</key>
-				<dict>
-					<key>itemType</key>
-					<dict/>
-					<key>predicate</key>
-					<dict/>
-				</dict>
-				<key>AMProvides</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Types</key>
-					<array>
-						<string>com.apple.cocoa.path</string>
-					</array>
-				</dict>
-				<key>AMRequiredResources</key>
-				<array/>
-				<key>AMSelectedInputType</key>
-				<string>com.apple.cocoa.path</string>
-				<key>AMSelectedOutputType</key>
-				<string>com.apple.cocoa.path</string>
-				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/Filter Finder Items 2.action</string>
-				<key>ActionName</key>
-				<string>过滤“访达”项目</string>
-				<key>ActionParameters</key>
-				<dict>
-					<key>itemType</key>
-					<string>com.apple.cocoa.path</string>
-					<key>predicate</key>
-					<data>
-					YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25Z
-					JGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGG
-					oF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290
-					gAGvEBYLDBMYICorLTQ4PT5BRUlOT1JZXWFj
-					VSRudWxs0w0ODxAREl8QF05TQ29tcG91bmRQ
-					cmVkaWNhdGVUeXBlXxAPTlNTdWJwcmVkaWNh
-					dGVzViRjbGFzcxABgAKAFdIUDxUXWk5TLm9i
-					amVjdHOhFoADgBTUDxkaGxwdHh9fEBFOU1Jp
-					Z2h0RXhwcmVzc2lvbl8QEE5TTGVmdEV4cHJl
-					c3Npb25fEBNOU1ByZWRpY2F0ZU9wZXJhdG9y
-					gBOADoAEgBHVISIjJA8lJicoKVlOU09wZXJh
-					bmReTlNTZWxlY3Rvck5hbWVfEBBOU0V4cHJl
-					c3Npb25UeXBlW05TQXJndW1lbnRzgAaABRAD
-					gAiADVx2YWx1ZUZvcktleTrSIw8QLIAH0i4v
-					MDFaJGNsYXNzbmFtZVgkY2xhc3Nlc18QEE5T
-					U2VsZkV4cHJlc3Npb26jMDIzXE5TRXhwcmVz
-					c2lvblhOU09iamVjdNIUDzU3oTaACYAM0w8j
-					OTo7PFlOU0tleVBhdGiACxAKgApUa2luZNIu
-					Lz9AXxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhw
-					cmVzc2lvbqM/MjPSLi9CQ15OU011dGFibGVB
-					cnJheaNCRDNXTlNBcnJhedIuL0ZHXxATTlNL
-					ZXlQYXRoRXhwcmVzc2lvbqRGSDIzXxAUTlNG
-					dW5jdGlvbkV4cHJlc3Npb27TSiMPS0xNXxAP
-					TlNDb25zdGFudFZhbHVlgA8QAIAQEATSLi9Q
-					UV8QGU5TQ29uc3RhbnRWYWx1ZUV4cHJlc3Np
-					b26jUDIz1Q9TVFVWV0xYTE5aTlNNb2RpZmll
-					clhOU05lZ2F0ZVlOU09wdGlvbnNeTlNPcGVy
-					YXRvclR5cGWAEgjSLi9aW18QG05TRXF1YWxp
-					dHlQcmVkaWNhdGVPcGVyYXRvcqNaXDNfEBNO
-					U1ByZWRpY2F0ZU9wZXJhdG9y0i4vXl9fEBVO
-					U0NvbXBhcmlzb25QcmVkaWNhdGWjXmAzW05T
-					UHJlZGljYXRl0i4vRGKiRDPSLi9kZV8QE05T
-					Q29tcG91bmRQcmVkaWNhdGWjZGAzAAgAEQAa
-					ACQAKQAyADcASQBMAFEAUwBsAHIAeQCTAKUA
-					rACuALAAsgC3AMIAxADGAMgA0QDlAPgBDgEQ
-					ARIBFAEWASEBKwE6AU0BWQFbAV0BXwFhAWMB
-					cAF1AXcBfAGHAZABowGnAbQBvQHCAcQBxgHI
-					Ac8B2QHbAd0B3wHkAekCCAIMAhECIAIkAiwC
-					MQJHAkwCYwJqAnwCfgKAAoIChAKJAqUCqQK0
-					Ar8CyALSAuEC4wLkAukDBwMLAyEDJgM+A0ID
-					TgNTA1YDWwNxAAAAAAAAAgEAAAAAAAAAZgAA
-					AAAAAAAAAAAAAAAAA3U=
-					</data>
-				</dict>
-				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.FilterFinderItems2</string>
-				<key>CFBundleVersion</key>
-				<string>2.1.1</string>
-				<key>CanShowSelectedItemsWhenRun</key>
-				<false/>
-				<key>CanShowWhenRun</key>
-				<true/>
-				<key>Category</key>
-				<array>
-					<string>AMCategoryFilesAndFolders</string>
-				</array>
-				<key>Class Name</key>
-				<string>Filter_Finder_Items_2</string>
-				<key>InputUUID</key>
-				<string>EC5C70F3-B129-401F-B076-635518527FC0</string>
-				<key>Keywords</key>
-				<array/>
-				<key>OutputUUID</key>
-				<string>572FD408-740B-4F08-90AB-49F06FC42037</string>
-				<key>UUID</key>
-				<string>40288C70-9079-4824-858A-4F588F4F5FEF</string>
-				<key>UnlocalizedApplications</key>
-				<array>
-					<string>Finder</string>
-				</array>
-				<key>arguments</key>
-				<dict>
-					<key>0</key>
-					<dict>
-						<key>default value</key>
-						<string>com.apple.cocoa.path</string>
-						<key>name</key>
-						<string>itemType</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>0</string>
-					</dict>
-					<key>1</key>
-					<dict>
-						<key>default value</key>
-						<data>
-						</data>
-						<key>name</key>
-						<string>predicate</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>1</string>
-					</dict>
-				</dict>
-				<key>isViewVisible</key>
-				<integer>1</integer>
-				<key>location</key>
-				<string>565.000000:382.000000</string>
-				<key>nibPath</key>
-				<string>/System/Library/Automator/Filter Finder Items 2.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<integer>1</integer>
@@ -494,12 +332,10 @@
 						<string>1</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>565.000000:735.000000</string>
+				<string>565.000000:326.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Filter Finder Items 2.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -669,180 +505,7 @@
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>565.000000:1184.000000</string>
-				<key>nibPath</key>
-				<string>/System/Library/Automator/Filter Finder Items 2.action/Contents/Resources/Base.lproj/main.nib</string>
-			</dict>
-			<key>isViewVisible</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>action</key>
-			<dict>
-				<key>AMAccepts</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Optional</key>
-					<false/>
-					<key>Types</key>
-					<array>
-						<string>com.apple.cocoa.path</string>
-					</array>
-				</dict>
-				<key>AMActionVersion</key>
-				<string>2.1.1</string>
-				<key>AMApplication</key>
-				<array>
-					<string>访达</string>
-				</array>
-				<key>AMParameterProperties</key>
-				<dict>
-					<key>itemType</key>
-					<dict/>
-					<key>predicate</key>
-					<dict/>
-				</dict>
-				<key>AMProvides</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Types</key>
-					<array>
-						<string>com.apple.cocoa.path</string>
-					</array>
-				</dict>
-				<key>AMRequiredResources</key>
-				<array/>
-				<key>AMSelectedInputType</key>
-				<string>com.apple.cocoa.path</string>
-				<key>AMSelectedOutputType</key>
-				<string>com.apple.cocoa.path</string>
-				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/Filter Finder Items 2.action</string>
-				<key>ActionName</key>
-				<string>过滤“访达”项目</string>
-				<key>ActionParameters</key>
-				<dict>
-					<key>itemType</key>
-					<string>com.apple.cocoa.path</string>
-					<key>predicate</key>
-					<data>
-					YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25Z
-					JGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGG
-					oF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290
-					gAGvEB0LDBMYICorLTQ4PT5BRUlOWVpbXBBd
-					XmJla3B0dlUkbnVsbNMNDg8QERJfEBdOU0Nv
-					bXBvdW5kUHJlZGljYXRlVHlwZV8QD05TU3Vi
-					cHJlZGljYXRlc1YkY2xhc3MQAYACgBzSFA8V
-					F1pOUy5vYmplY3RzoRaAA4Ab1A8ZGhscHR4f
-					XxARTlNSaWdodEV4cHJlc3Npb25fEBBOU0xl
-					ZnRFeHByZXNzaW9uXxATTlNQcmVkaWNhdGVP
-					cGVyYXRvcoAagA6ABIAY1SEiIyQPJSYnKClZ
-					TlNPcGVyYW5kXk5TU2VsZWN0b3JOYW1lXxAQ
-					TlNFeHByZXNzaW9uVHlwZVtOU0FyZ3VtZW50
-					c4AGgAUQA4AIgA1cdmFsdWVGb3JLZXk60iMP
-					ECyAB9IuLzAxWiRjbGFzc25hbWVYJGNsYXNz
-					ZXNfEBBOU1NlbGZFeHByZXNzaW9uozAyM1xO
-					U0V4cHJlc3Npb25YTlNPYmplY3TSFA81N6E2
-					gAmADNMPIzk6OzxZTlNLZXlQYXRogAsQCoAK
-					WGZpbGVTaXpl0i4vP0BfEBxOU0tleVBhdGhT
-					cGVjaWZpZXJFeHByZXNzaW9uoz8yM9IuL0JD
-					Xk5TTXV0YWJsZUFycmF5o0JEM1dOU0FycmF5
-					0i4vRkdfEBNOU0tleVBhdGhFeHByZXNzaW9u
-					pEZIMjNfEBROU0Z1bmN0aW9uRXhwcmVzc2lv
-					btNKIw9LTE1fEA9OU0NvbnN0YW50VmFsdWWA
-					DxAAgBfTTxQPUFRYV05TLmtleXOjUVJTgBCA
-					EYASo1VWV4ATgBSAFYAWVXZhbHVlWGJ5dGVV
-					bml0XXByZWRpY2F0ZVR5cGUQlhAP0i4vX2Bf
-					EBNOU011dGFibGVEaWN0aW9uYXJ5o19hM1xO
-					U0RpY3Rpb25hcnnSLi9jZF8QGU5TQ29uc3Rh
-					bnRWYWx1ZUV4cHJlc3Npb26jYzIz1Q9mZ2hp
-					akwnTCdaTlNNb2RpZmllcllOU1ZhcmlhbnRZ
-					TlNPcHRpb25zXk5TT3BlcmF0b3JUeXBlgBnS
-					Li9sbV8QHU5TQ29tcGFyaXNvblByZWRpY2F0
-					ZU9wZXJhdG9yo25vM18QHU5TQ29tcGFyaXNv
-					blByZWRpY2F0ZU9wZXJhdG9yXxATTlNQcmVk
-					aWNhdGVPcGVyYXRvctIuL3FyXxAVTlNDb21w
-					YXJpc29uUHJlZGljYXRlo3FzM1tOU1ByZWRp
-					Y2F0ZdIuL0R1okQz0i4vd3hfEBNOU0NvbXBv
-					dW5kUHJlZGljYXRlo3dzMwAIABEAGgAkACkA
-					MgA3AEkATABRAFMAcwB5AIAAmgCsALMAtQC3
-					ALkAvgDJAMsAzQDPANgA7AD/ARUBFwEZARsB
-					HQEoATIBQQFUAWABYgFkAWYBaAFqAXcBfAF+
-					AYMBjgGXAaoBrgG7AcQByQHLAc0BzwHWAeAB
-					4gHkAeYB7wH0AhMCFwIcAisCLwI3AjwCUgJX
-					Am4CdQKHAokCiwKNApQCnAKgAqICpAKmAqoC
-					rAKuArACsgK4AsECzwLRAtMC2ALuAvIC/wME
-					AyADJAMvAzoDRANOA10DXwNkA4QDiAOoA74D
-					wwPbA98D6wPwA/MD+AQOAAAAAAAAAgEAAAAA
-					AAAAeQAAAAAAAAAAAAAAAAAABBI=
-					</data>
-				</dict>
-				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.FilterFinderItems2</string>
-				<key>CFBundleVersion</key>
-				<string>2.1.1</string>
-				<key>CanShowSelectedItemsWhenRun</key>
-				<false/>
-				<key>CanShowWhenRun</key>
-				<true/>
-				<key>Category</key>
-				<array>
-					<string>AMCategoryFilesAndFolders</string>
-				</array>
-				<key>Class Name</key>
-				<string>Filter_Finder_Items_2</string>
-				<key>InputUUID</key>
-				<string>F15BF4A9-9CD8-4BDE-B117-B4092AC1E8E7</string>
-				<key>Keywords</key>
-				<array/>
-				<key>OutputUUID</key>
-				<string>C180A172-13A6-4B2B-A33D-CADBA7DB4B42</string>
-				<key>ShowWhenRun</key>
-				<true/>
-				<key>UUID</key>
-				<string>13B2E237-CC34-4A89-B4C0-AECD2BC40CF7</string>
-				<key>UnlocalizedApplications</key>
-				<array>
-					<string>Finder</string>
-				</array>
-				<key>arguments</key>
-				<dict>
-					<key>0</key>
-					<dict>
-						<key>default value</key>
-						<string>com.apple.cocoa.path</string>
-						<key>name</key>
-						<string>itemType</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>0</string>
-					</dict>
-					<key>1</key>
-					<dict>
-						<key>default value</key>
-						<data>
-						</data>
-						<key>name</key>
-						<string>predicate</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>1</string>
-					</dict>
-				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
-				<key>isViewVisible</key>
-				<integer>1</integer>
-				<key>location</key>
-				<string>565.000000:1413.000000</string>
+				<string>565.000000:595.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Filter Finder Items 2.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -1060,7 +723,7 @@ osascript -e 'display notification "压缩完成" with title "TinyPng"'</string>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>565.000000:1595.000000</string>
+				<string>565.000000:777.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -1070,40 +733,26 @@ osascript -e 'display notification "压缩完成" with title "TinyPng"'</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>06D470ED-3E3B-47C3-B257-7E0EE7409168</key>
-		<dict>
-			<key>from</key>
-			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
-			<key>to</key>
-			<string>13B2E237-CC34-4A89-B4C0-AECD2BC40CF7 - 13B2E237-CC34-4A89-B4C0-AECD2BC40CF7</string>
-		</dict>
-		<key>60C93D69-41DA-4EE7-858D-AA87E1006BD5</key>
-		<dict>
-			<key>from</key>
-			<string>CA9D0A3C-C116-4298-9588-D28E2062E58D - CA9D0A3C-C116-4298-9588-D28E2062E58D</string>
-			<key>to</key>
-			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
-		</dict>
-		<key>8EAC8C70-FE51-4CEC-B9DC-69E5115D7097</key>
-		<dict>
-			<key>from</key>
-			<string>40288C70-9079-4824-858A-4F588F4F5FEF - 40288C70-9079-4824-858A-4F588F4F5FEF</string>
-			<key>to</key>
-			<string>CA9D0A3C-C116-4298-9588-D28E2062E58D - CA9D0A3C-C116-4298-9588-D28E2062E58D</string>
-		</dict>
-		<key>A51C42C9-620E-4B46-91D7-21B61593250A</key>
-		<dict>
-			<key>from</key>
-			<string>13B2E237-CC34-4A89-B4C0-AECD2BC40CF7 - 13B2E237-CC34-4A89-B4C0-AECD2BC40CF7</string>
-			<key>to</key>
-			<string>DFD4F745-4F49-4015-96C3-413828E5418A - DFD4F745-4F49-4015-96C3-413828E5418A</string>
-		</dict>
-		<key>DCE32204-B512-482A-82F1-588DF248B6E5</key>
+		<key>5F1092C8-99A7-4397-8CD7-9D2ACFBD8A6F</key>
 		<dict>
 			<key>from</key>
 			<string>1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B - 1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B</string>
 			<key>to</key>
-			<string>40288C70-9079-4824-858A-4F588F4F5FEF - 40288C70-9079-4824-858A-4F588F4F5FEF</string>
+			<string>CA9D0A3C-C116-4298-9588-D28E2062E58D - CA9D0A3C-C116-4298-9588-D28E2062E58D</string>
+		</dict>
+		<key>6BA18A79-D021-4DDA-A470-0F7B5EA20638</key>
+		<dict>
+			<key>from</key>
+			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
+			<key>to</key>
+			<string>DFD4F745-4F49-4015-96C3-413828E5418A - DFD4F745-4F49-4015-96C3-413828E5418A</string>
+		</dict>
+		<key>9F64929F-51F1-4DC1-AEA4-2556FEEF8252</key>
+		<dict>
+			<key>from</key>
+			<string>CA9D0A3C-C116-4298-9588-D28E2062E58D - CA9D0A3C-C116-4298-9588-D28E2062E58D</string>
+			<key>to</key>
+			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
 		</dict>
 	</dict>
 	<key>variables</key>
