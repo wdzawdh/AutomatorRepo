@@ -594,8 +594,6 @@
 						<string>1</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
@@ -998,49 +996,64 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string># 检查参数是否为空
+					<string>#!/bin/bash
+
+CONFIG_DIR="$HOME/.automator/cache"
+CONFIG_FILE="$CONFIG_DIR/tinypng_apikey"
+
+# 如果没有参数则退出
 if [ -z "$@" ]; then
     osascript -e 'display alert "没有匹配的图片"'
     exit 0
 fi
 
+# 确保配置目录存在
+mkdir -p "$CONFIG_DIR"
 
-# 显示输入框并获取用户输入
-apikey=$(osascript -e '
+# 获取之前保存的 apikey（如果存在）
+if [ -f "$CONFIG_FILE" ]; then
+    DEFAULT_APIKEY=$(cat "$CONFIG_FILE")
+else
+    DEFAULT_APIKEY=""
+fi
+
+# 弹窗输入，默认值为已缓存的 APIKey
+apikey=$(osascript -e "
     try
-	-- 获取 API Key
-	set api_key to text returned of (display dialog "请输入TinyPng ApiKey" default 	answer "" default button 1 with icon caution)
-	-- 返回 API Key 供 Automator 使用
-	return api_key
+        set api_key to text returned of (display dialog \"请输入 TinyPNG ApiKey\" default answer \"$DEFAULT_APIKEY\" default button 1 with icon caution)
+        return api_key
     on error
-        -- 用户点击“取消”时，抛出错误并返回特殊的退出码
-        return "-1"
+        return \"-1\"
     end try
-')
+")
 
-# 检查是否点击了“取消”
+# 用户取消
 if [ "$apikey" = "-1" ]; then
     exit 0
 fi
 
+# 缓存到本地
+echo "$apikey" &gt; "$CONFIG_FILE"
+
 echo "API_KEY: $apikey"
 
-for file in "$@"
-do
+# 处理图片
+for file in "$@"; do
   echo "压缩文件: $file"
 
-  # 压缩图片并返回新的图片 URL
-  response=$(curl --user api:$apikey \
+  response=$(curl --silent --user api:$apikey \
     --data-binary @"$file" \
     https://api.tinify.com/shrink)
 
-  # 获取压缩后的图片 URL
-  download_url=$(echo $response | grep -o '"url":"[^"]*' | grep -o '[^"]*$')
+  download_url=$(echo "$response" | grep -o '"url":"[^"]*' | grep -o '[^"]*$')
 
-  echo $download_url
-
-  # 下载压缩后的图片并覆盖原文件
-  curl -o "$file" $download_url
+  if [ -n "$download_url" ]; then
+    curl --silent -o "$file" "$download_url"
+    echo "✅ 压缩成功：$file"
+  else
+    echo "⚠️ 压缩失败：$file"
+    echo "$response"
+  fi
 done
 
 osascript -e 'display notification "压缩完成" with title "TinyPng"'</string>
@@ -1170,42 +1183,42 @@ osascript -e 'display notification "压缩完成" with title "TinyPng"'</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>2300CC33-901A-4EF8-BCB3-F5EC2CB4B745</key>
-		<dict>
-			<key>from</key>
-			<string>40288C70-9079-4824-858A-4F588F4F5FEF - 40288C70-9079-4824-858A-4F588F4F5FEF</string>
-			<key>to</key>
-			<string>44C46C59-6FDC-4FD0-B957-917EC7D39CBA - 44C46C59-6FDC-4FD0-B957-917EC7D39CBA</string>
-		</dict>
-		<key>2F073D0E-1DA0-40B7-853C-D68A05CC4C05</key>
-		<dict>
-			<key>from</key>
-			<string>26A3CB3E-24EC-43A2-AE40-229E16FBBF71 - 26A3CB3E-24EC-43A2-AE40-229E16FBBF71</string>
-			<key>to</key>
-			<string>40288C70-9079-4824-858A-4F588F4F5FEF - 40288C70-9079-4824-858A-4F588F4F5FEF</string>
-		</dict>
-		<key>82AAF149-101A-47EC-AB60-BFCFAF8B0DD9</key>
-		<dict>
-			<key>from</key>
-			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
-			<key>to</key>
-			<string>D6150556-CEEC-40A4-9C83-DB20DDD2AD9F - D6150556-CEEC-40A4-9C83-DB20DDD2AD9F</string>
-		</dict>
-		<key>C2A4294F-74AC-4BB0-80A2-15EB1D97AF8B</key>
-		<dict>
-			<key>from</key>
-			<string>1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B - 1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B</string>
-			<key>to</key>
-			<string>26A3CB3E-24EC-43A2-AE40-229E16FBBF71 - 26A3CB3E-24EC-43A2-AE40-229E16FBBF71</string>
-		</dict>
-		<key>D407CF81-DEC0-42DC-8F67-C64DF8BA5BB3</key>
+		<key>2798C634-F781-4AFD-8AD9-05AF207C9404</key>
 		<dict>
 			<key>from</key>
 			<string>D6150556-CEEC-40A4-9C83-DB20DDD2AD9F - D6150556-CEEC-40A4-9C83-DB20DDD2AD9F</string>
 			<key>to</key>
 			<string>DFD4F745-4F49-4015-96C3-413828E5418A - DFD4F745-4F49-4015-96C3-413828E5418A</string>
 		</dict>
-		<key>DFAB7F87-CCD1-41BF-815F-50BB3FCB971D</key>
+		<key>2DAE88A6-D1A4-4807-A9B0-11FAD5EE1F5B</key>
+		<dict>
+			<key>from</key>
+			<string>1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B - 1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B</string>
+			<key>to</key>
+			<string>26A3CB3E-24EC-43A2-AE40-229E16FBBF71 - 26A3CB3E-24EC-43A2-AE40-229E16FBBF71</string>
+		</dict>
+		<key>43C6E117-7EE5-4BB7-A127-36D0B6B5DDB6</key>
+		<dict>
+			<key>from</key>
+			<string>40288C70-9079-4824-858A-4F588F4F5FEF - 40288C70-9079-4824-858A-4F588F4F5FEF</string>
+			<key>to</key>
+			<string>44C46C59-6FDC-4FD0-B957-917EC7D39CBA - 44C46C59-6FDC-4FD0-B957-917EC7D39CBA</string>
+		</dict>
+		<key>9D9221C7-DF8B-4BD4-ADE3-8A6B52141DCC</key>
+		<dict>
+			<key>from</key>
+			<string>26A3CB3E-24EC-43A2-AE40-229E16FBBF71 - 26A3CB3E-24EC-43A2-AE40-229E16FBBF71</string>
+			<key>to</key>
+			<string>40288C70-9079-4824-858A-4F588F4F5FEF - 40288C70-9079-4824-858A-4F588F4F5FEF</string>
+		</dict>
+		<key>B96A3DBD-9E52-460A-832F-A84F9F2BA5B0</key>
+		<dict>
+			<key>from</key>
+			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
+			<key>to</key>
+			<string>D6150556-CEEC-40A4-9C83-DB20DDD2AD9F - D6150556-CEEC-40A4-9C83-DB20DDD2AD9F</string>
+		</dict>
+		<key>C78BD48A-A81C-4993-81C4-02726210D3B2</key>
 		<dict>
 			<key>from</key>
 			<string>44C46C59-6FDC-4FD0-B957-917EC7D39CBA - 44C46C59-6FDC-4FD0-B957-917EC7D39CBA</string>

@@ -561,49 +561,64 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string># 检查参数是否为空
+					<string>#!/bin/bash
+
+CONFIG_DIR="$HOME/.automator/cache"
+CONFIG_FILE="$CONFIG_DIR/tinypng_apikey"
+
+# 如果没有参数则退出
 if [ -z "$@" ]; then
     osascript -e 'display alert "没有匹配的图片"'
     exit 0
 fi
 
+# 确保配置目录存在
+mkdir -p "$CONFIG_DIR"
 
-# 显示输入框并获取用户输入
-apikey=$(osascript -e '
+# 获取之前保存的 apikey（如果存在）
+if [ -f "$CONFIG_FILE" ]; then
+    DEFAULT_APIKEY=$(cat "$CONFIG_FILE")
+else
+    DEFAULT_APIKEY=""
+fi
+
+# 弹窗输入，默认值为已缓存的 APIKey
+apikey=$(osascript -e "
     try
-	-- 获取 API Key
-	set api_key to text returned of (display dialog "请输入TinyPng ApiKey" default 	answer "" default button 1 with icon caution)
-	-- 返回 API Key 供 Automator 使用
-	return api_key
+        set api_key to text returned of (display dialog \"请输入 TinyPNG ApiKey\" default answer \"$DEFAULT_APIKEY\" default button 1 with icon caution)
+        return api_key
     on error
-        -- 用户点击“取消”时，抛出错误并返回特殊的退出码
-        return "-1"
+        return \"-1\"
     end try
-')
+")
 
-# 检查是否点击了“取消”
+# 用户取消
 if [ "$apikey" = "-1" ]; then
     exit 0
 fi
 
+# 缓存到本地
+echo "$apikey" &gt; "$CONFIG_FILE"
+
 echo "API_KEY: $apikey"
 
-for file in "$@"
-do
+# 处理图片
+for file in "$@"; do
   echo "压缩文件: $file"
 
-  # 压缩图片并返回新的图片 URL
-  response=$(curl --user api:$apikey \
+  response=$(curl --silent --user api:$apikey \
     --data-binary @"$file" \
     https://api.tinify.com/shrink)
 
-  # 获取压缩后的图片 URL
-  download_url=$(echo $response | grep -o '"url":"[^"]*' | grep -o '[^"]*$')
+  download_url=$(echo "$response" | grep -o '"url":"[^"]*' | grep -o '[^"]*$')
 
-  echo $download_url
-
-  # 下载压缩后的图片并覆盖原文件
-  curl -o "$file" $download_url
+  if [ -n "$download_url" ]; then
+    curl --silent -o "$file" "$download_url"
+    echo "✅ 压缩成功：$file"
+  else
+    echo "⚠️ 压缩失败：$file"
+    echo "$response"
+  fi
 done
 
 osascript -e 'display notification "压缩完成" with title "TinyPng"'</string>
@@ -733,26 +748,26 @@ osascript -e 'display notification "压缩完成" with title "TinyPng"'</string>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>5F1092C8-99A7-4397-8CD7-9D2ACFBD8A6F</key>
-		<dict>
-			<key>from</key>
-			<string>1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B - 1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B</string>
-			<key>to</key>
-			<string>CA9D0A3C-C116-4298-9588-D28E2062E58D - CA9D0A3C-C116-4298-9588-D28E2062E58D</string>
-		</dict>
-		<key>6BA18A79-D021-4DDA-A470-0F7B5EA20638</key>
+		<key>3CDB8909-1459-44DD-8970-253B90DF69C0</key>
 		<dict>
 			<key>from</key>
 			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
 			<key>to</key>
 			<string>DFD4F745-4F49-4015-96C3-413828E5418A - DFD4F745-4F49-4015-96C3-413828E5418A</string>
 		</dict>
-		<key>9F64929F-51F1-4DC1-AEA4-2556FEEF8252</key>
+		<key>AB4AABC9-AC5B-484C-8F9C-75947C21A3A0</key>
 		<dict>
 			<key>from</key>
 			<string>CA9D0A3C-C116-4298-9588-D28E2062E58D - CA9D0A3C-C116-4298-9588-D28E2062E58D</string>
 			<key>to</key>
 			<string>51510795-46E4-436E-98B5-3D92C62487E9 - 51510795-46E4-436E-98B5-3D92C62487E9</string>
+		</dict>
+		<key>BF0978FC-3061-4857-BB8A-90BDF3BA654A</key>
+		<dict>
+			<key>from</key>
+			<string>1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B - 1D48DE69-69E0-4DB1-AED2-BC1E786EFF2B</string>
+			<key>to</key>
+			<string>CA9D0A3C-C116-4298-9588-D28E2062E58D - CA9D0A3C-C116-4298-9588-D28E2062E58D</string>
 		</dict>
 	</dict>
 	<key>variables</key>
