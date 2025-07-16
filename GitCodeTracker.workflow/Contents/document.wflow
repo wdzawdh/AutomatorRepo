@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>523</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.1.1</string>
+				<key>AMApplication</key>
+				<array>
+					<string>访达</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict/>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Get Selected Finder Items 2.action</string>
+				<key>ActionName</key>
+				<string>获取所选的访达项目</string>
+				<key>ActionParameters</key>
+				<dict/>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.GetSelectedFinderItems2</string>
+				<key>CFBundleVersion</key>
+				<string>2.1.1</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryFilesAndFolders</string>
+				</array>
+				<key>Class Name</key>
+				<string>AMGetSelectedFinderItemsAction</string>
+				<key>InputUUID</key>
+				<string>C926A616-CAEC-4D3E-9EAA-138927818308</string>
+				<key>Keywords</key>
+				<array/>
+				<key>OutputUUID</key>
+				<string>380064F1-8AB7-4E53-B91E-B46DCC736A17</string>
+				<key>UUID</key>
+				<string>3B5F40A6-3A77-41B5-9BBC-CCFC8319A804</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Finder</string>
+				</array>
+				<key>arguments</key>
+				<dict/>
+				<key>conversionLabel</key>
+				<integer>0</integer>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>548.000000:67.000000</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.0.3</string>
+				<key>AMApplication</key>
+				<array>
+					<string>自动操作</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>CheckedForUserDefaultShell</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>运行Shell脚本</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/zsh
+
+# 检查是否有传入参数（即选中的Finder项目）
+if [[ $# -eq 0 ]]; then
+    # 没有选中项目，使用osascript请求用户选择
+    selected_files=$(osascript -e '
+        tell application "Finder"
+            try
+                set chosenFiles to choose file with prompt "请选择文件:" with multiple selections allowed
+                set filePaths to {}
+                repeat with aFile in chosenFiles
+                    set end of filePaths to POSIX path of aFile
+                end repeat
+                return filePaths as string
+            on error
+                return ""
+            end try
+        end tell
+    ')
+    
+    if [[ -z "$selected_files" ]]; then
+        echo "用户取消了选择"
+        exit 1
+    fi
+    
+    # 将选中的文件转换为数组
+    files=(${(f)selected_files})
+    
+    # 处理选中的文件
+    for file in "${files[@]}"; do
+        [[ -n "$file" ]] &amp;&amp; echo "$file"
+    done
+else
+    # 有选中项目，直接处理
+    for file in "$@"; do
+        echo "$file"
+    done
+fi</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/bin/zsh</string>
+					<key>source</key>
+					<string></string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>2.0.3</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScriptAction</string>
+				<key>InputUUID</key>
+				<string>53AA243A-197E-4615-927E-462189D95059</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>脚本</string>
+					<string>命令</string>
+					<string>运行</string>
+					<string>Unix</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>39A7016E-7717-4D25-BC3E-A815613BB77C</string>
+				<key>UUID</key>
+				<string>994CBDCB-FD78-45A1-A1F8-8CAA3C8F0056</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>0</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/sh</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>548.000000:680.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.0.3</string>
+				<key>AMApplication</key>
+				<array>
+					<string>自动操作</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>CheckedForUserDefaultShell</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>运行Shell脚本</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/zsh
+
+# 函数：弹窗获取关键代码
+get_keyword_input() {
+    result=$(osascript -e 'text returned of (display dialog "请输入要查找的关键代码:" default answer "")')
+    echo "$result"
+}
+
+# 函数：显示错误弹窗
+show_error() {
+    local message="$1"
+    osascript &lt;&lt; EOF
+        display dialog "$message" buttons {"确定"} default button 1 with icon stop
+EOF
+}
+
+# 函数：显示信息弹窗
+show_info() {
+    local message="$1"
+    osascript &lt;&lt; EOF
+        display dialog "$message" buttons {"确定"} default button 1 with icon note
+EOF
+}
+
+# 主逻辑开始
+if [[ $# -eq 0 ]]; then
+    show_error "错误：未提供文件路径"
+    exit 1
+fi
+
+# 文件路径从第一个参数获取
+FILE="$1"
+
+# 弹窗获取关键代码
+KEYWORD=$(get_keyword_input)
+if [[ -z "$KEYWORD" ]]; then
+    show_error "错误：必须提供关键代码"
+    exit 1
+fi
+
+# 检查文件是否存在
+if [[ ! -f "$FILE" ]]; then
+    show_error "错误：文件 '$FILE' 不存在"
+    exit 1
+fi
+
+# 获取文件的父目录和文件名
+FILE_DIR=$(dirname "$FILE")
+FILE_NAME=$(basename "$FILE")
+
+# 切换到文件的父目录
+cd "$FILE_DIR"
+
+# 检查是否在Git仓库中
+if ! git rev-parse --git-dir &gt; /dev/null 2&gt;&amp;1; then
+    show_error "错误：文件所在目录不是Git仓库"
+    exit 1
+fi
+
+# 执行git log命令
+echo "正在查找包含 \"$KEYWORD\" 的提交记录..."
+git_output=$(git log -p -S "$KEYWORD" -- "$FILE_NAME" 2&gt;&amp;1)
+
+if [[ -z "$git_output" ]]; then
+    show_info "未找到包含 $KEYWORD 的提交记录"
+    echo "未找到包含 \"$KEYWORD\" 的提交记录"
+else
+    # 解析Author和Date信息
+    author_date_info=""
+    while IFS= read -r line; do
+        if [[ $line =~ ^Author: ]]; then
+            author_date_info+="$line"$'\n'
+        elif [[ $line =~ ^Date: ]]; then
+            author_date_info+="$line"$'\n'$'\n'
+        fi
+    done &lt;&lt;&lt; "$git_output"
+
+    # 如果找到了信息，弹窗显示
+    if [[ -n "$author_date_info" ]]; then
+        show_info "查找关键词: $KEYWORD"$'\n'$'\n'"$author_date_info"
+    else
+        show_info "找到了提交记录，但无法解析Author和Date信息"
+    fi
+fi
+
+# 同时在终端输出完整信息
+echo "完整的git log输出:"
+echo "===================="
+echo "$git_output"</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/bin/zsh</string>
+					<key>source</key>
+					<string></string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>2.0.3</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScriptAction</string>
+				<key>InputUUID</key>
+				<string>831E0D22-6E3F-4386-947B-AA623E13A1F2</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>脚本</string>
+					<string>命令</string>
+					<string>运行</string>
+					<string>Unix</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>C321291A-50BE-47DA-B42A-1105806D49F9</string>
+				<key>UUID</key>
+				<string>15414305-20E3-46DC-A262-67C62E1BC246</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>0</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/sh</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>548.000000:1160.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict>
+		<key>5D72383B-4AE6-4896-BABF-325C64A585BF</key>
+		<dict>
+			<key>from</key>
+			<string>3B5F40A6-3A77-41B5-9BBC-CCFC8319A804 - 3B5F40A6-3A77-41B5-9BBC-CCFC8319A804</string>
+			<key>to</key>
+			<string>994CBDCB-FD78-45A1-A1F8-8CAA3C8F0056 - 994CBDCB-FD78-45A1-A1F8-8CAA3C8F0056</string>
+		</dict>
+		<key>9801E0E4-F05B-4684-B613-FC4D05F79810</key>
+		<dict>
+			<key>from</key>
+			<string>994CBDCB-FD78-45A1-A1F8-8CAA3C8F0056 - 994CBDCB-FD78-45A1-A1F8-8CAA3C8F0056</string>
+			<key>to</key>
+			<string>15414305-20E3-46DC-A262-67C62E1BC246 - 15414305-20E3-46DC-A262-67C62E1BC246</string>
+		</dict>
+	</dict>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.workflow</string>
+	</dict>
+</dict>
+</plist>
