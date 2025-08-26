@@ -47,3 +47,12 @@
 ### **收集项目图片** [download](https://github.com/wdzawdh/AutomatorRepo/releases/download/CollectImages.workflow-release/CollectImages.workflow.zip)
 
 - 此工具会将选择的项目文件夹中的所有图片提取出来
+
+### **重启ADB** [download](https://github.com/wdzawdh/AutomatorRepo/releases/download/RestartADB.workflow-release/RestartADB.workflow.zip)
+
+- 此工具会自动重启Android ADB
+
+### **获取Android顶部Activity的信息** [download](https://github.com/wdzawdh/AutomatorRepo/releases/download/AndroidTopActivity.workflow-release/AndroidTopActivity.workflow.zip)
+
+- 此工具会获取当前连接的Android设备前台应用顶部Activity的包名和类名
+
