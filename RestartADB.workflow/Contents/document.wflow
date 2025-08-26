@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>523</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.0.3</string>
+				<key>AMApplication</key>
+				<array>
+					<string>自动操作</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>CheckedForUserDefaultShell</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>运行Shell脚本</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/bash
+
+# 设置PATH环境变量，确保能找到系统命令
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH"
+
+# 重启ADB服务的脚本
+
+# 查找adb命令位置
+ADB_PATH=""
+
+# 常见的adb路径
+POSSIBLE_PATHS=(
+    "/usr/local/bin/adb"
+    "$HOME/Library/Android/sdk/platform-tools/adb"
+    "$HOME/Android/Sdk/platform-tools/adb"
+    "/opt/homebrew/bin/adb"
+    "$(/usr/bin/which adb 2&gt;/dev/null)"
+)
+
+# 查找可用的adb
+for path in "${POSSIBLE_PATHS[@]}"; do
+    if [[ -n "$path" &amp;&amp; -x "$path" ]]; then
+        ADB_PATH="$path"
+        break
+    fi
+done
+
+# 如果找不到adb
+if [[ -z "$ADB_PATH" ]]; then
+    dialog_text="❌ 未找到ADB命令
+
+请确保已安装Android SDK并配置环境变量
+
+常见位置：
+• ~/Library/Android/sdk/platform-tools/adb
+• /usr/local/bin/adb
+• /opt/homebrew/bin/adb"
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"ADB未找到\" buttons {\"确定\"} default button \"确定\" with icon stop"
+    exit 1
+fi
+
+# 显示开始重启的提示
+/usr/bin/osascript -e "display dialog \"🔄 正在重启ADB服务...\" with title \"ADB重启\" buttons {\"请稍等\"} default button \"请稍等\" with icon note giving up after 2"
+
+# 停止ADB服务
+kill_output=$($ADB_PATH kill-server 2&gt;&amp;1)
+kill_success=$?
+
+# 等待一秒
+/bin/sleep 1
+
+# 启动ADB服务
+start_output=$($ADB_PATH start-server 2&gt;&amp;1)
+start_success=$?
+
+# 检查设备连接状态
+/bin/sleep 2
+device_list=$($ADB_PATH devices 2&gt;&amp;1)
+device_count=$(/bin/echo "$device_list" | /usr/bin/grep -c "device$")
+
+# 准备结果信息
+if [[ $kill_success -eq 0 &amp;&amp; $start_success -eq 0 ]]; then
+    # 成功重启
+    if [[ $device_count -gt 0 ]]; then
+        # 有设备连接
+        device_info=$(/bin/echo "$device_list" | /usr/bin/grep "device$" | /usr/bin/head -5)
+        
+        dialog_text="✅ ADB服务重启成功！
+
+📱 检测到 $device_count 个设备：
+$device_info
+
+🔧 服务状态：正常运行"
+        icon="note"
+    else
+        # 无设备连接
+        dialog_text="✅ ADB服务重启成功！
+
+📱 当前无设备连接
+请确保：
+• 设备已连接USB
+• 已开启开发者选项和USB调试
+• 已授权调试权限
+
+🔧 服务状态：正常运行"
+        icon="caution"
+    fi
+else
+    # 重启失败
+    error_info=""
+    if [[ $kill_success -ne 0 &amp;&amp; -n "$kill_output" ]]; then
+        error_info="停止服务错误：$kill_output"
+    fi
+    if [[ $start_success -ne 0 &amp;&amp; -n "$start_output" ]]; then
+        if [[ -n "$error_info" ]]; then
+            error_info="$error_info\n启动服务错误：$start_output"
+        else
+            error_info="启动服务错误：$start_output"
+        fi
+    fi
+    
+    dialog_text="❌ ADB服务重启失败！
+
+错误信息：
+$error_info
+
+请尝试：
+• 检查ADB是否正确安装
+• 手动在终端运行命令
+• 重启电脑后再试"
+    icon="stop"
+fi
+
+# 显示最终结果
+/usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"ADB重启结果\" buttons {\"确定\"} default button \"确定\" with icon $icon"</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>0</integer>
+					<key>shell</key>
+					<string>/bin/zsh</string>
+					<key>source</key>
+					<string></string>
+				</dict>
+				<key>ActionRuntimeParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/bash
+
+# 设置PATH环境变量，确保能找到系统命令
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH"
+
+# 重启ADB服务的脚本
+
+# 查找adb命令位置
+ADB_PATH=""
+
+# 常见的adb路径
+POSSIBLE_PATHS=(
+    "/usr/local/bin/adb"
+    "$HOME/Library/Android/sdk/platform-tools/adb"
+    "$HOME/Android/Sdk/platform-tools/adb"
+    "/opt/homebrew/bin/adb"
+    "$(/usr/bin/which adb 2&gt;/dev/null)"
+)
+
+# 查找可用的adb
+for path in "${POSSIBLE_PATHS[@]}"; do
+    if [[ -n "$path" &amp;&amp; -x "$path" ]]; then
+        ADB_PATH="$path"
+        break
+    fi
+done
+
+# 如果找不到adb
+if [[ -z "$ADB_PATH" ]]; then
+    dialog_text="❌ 未找到ADB命令
+
+请确保已安装Android SDK并配置环境变量
+
+常见位置：
+• ~/Library/Android/sdk/platform-tools/adb
+• /usr/local/bin/adb
+• /opt/homebrew/bin/adb"
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"ADB未找到\" buttons {\"确定\"} default button \"确定\" with icon stop"
+    exit 1
+fi
+
+# 显示开始重启的提示
+/usr/bin/osascript -e "display dialog \"🔄 正在重启ADB服务...\" with title \"ADB重启\" buttons {\"请稍等\"} default button \"请稍等\" with icon note giving up after 2"
+
+# 停止ADB服务
+kill_output=$($ADB_PATH kill-server 2&gt;&amp;1)
+kill_success=$?
+
+# 等待一秒
+/bin/sleep 1
+
+# 启动ADB服务
+start_output=$($ADB_PATH start-server 2&gt;&amp;1)
+start_success=$?
+
+# 检查设备连接状态
+/bin/sleep 2
+device_list=$($ADB_PATH devices 2&gt;&amp;1)
+device_count=$(/bin/echo "$device_list" | /usr/bin/grep -c "device$")
+
+# 准备结果信息
+if [[ $kill_success -eq 0 &amp;&amp; $start_success -eq 0 ]]; then
+    # 成功重启
+    if [[ $device_count -gt 0 ]]; then
+        # 有设备连接
+        device_info=$(/bin/echo "$device_list" | /usr/bin/grep "device$" | /usr/bin/head -5)
+        
+        dialog_text="✅ ADB服务重启成功！
+
+📱 检测到 $device_count 个设备：
+$device_info
+
+🔧 服务状态：正常运行"
+        icon="note"
+    else
+        # 无设备连接
+        dialog_text="✅ ADB服务重启成功！
+
+📱 当前无设备连接
+请确保：
+• 设备已连接USB
+• 已开启开发者选项和USB调试
+• 已授权调试权限
+
+🔧 服务状态：正常运行"
+        icon="caution"
+    fi
+else
+    # 重启失败
+    error_info=""
+    if [[ $kill_success -ne 0 &amp;&amp; -n "$kill_output" ]]; then
+        error_info="停止服务错误：$kill_output"
+    fi
+    if [[ $start_success -ne 0 &amp;&amp; -n "$start_output" ]]; then
+        if [[ -n "$error_info" ]]; then
+            error_info="$error_info\n启动服务错误：$start_output"
+        else
+            error_info="启动服务错误：$start_output"
+        fi
+    fi
+    
+    dialog_text="❌ ADB服务重启失败！
+
+错误信息：
+$error_info
+
+请尝试：
+• 检查ADB是否正确安装
+• 手动在终端运行命令
+• 重启电脑后再试"
+    icon="stop"
+fi
+
+# 显示最终结果
+/usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"ADB重启结果\" buttons {\"确定\"} default button \"确定\" with icon $icon"</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>0</integer>
+					<key>shell</key>
+					<string>/bin/zsh</string>
+					<key>source</key>
+					<string></string>
+					<key>temporary items path</key>
+					<string>/var/folders/6c/4zkz97sd0yxb6zblxqghmgnr0000gn/T/15EC3C9B-B0C6-440F-B775-43DE308D704C/1/com.apple.RunShellScript</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>2.0.3</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScriptAction</string>
+				<key>InputUUID</key>
+				<string>6155A7F0-EDCB-4DCD-95AD-FE7D5D87C0DC</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>脚本</string>
+					<string>命令</string>
+					<string>运行</string>
+					<string>Unix</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>A6E3FF1F-EDA6-4BE5-8A68-9BA77574DF3F</string>
+				<key>UUID</key>
+				<string>7D3F77DB-BBF2-4E6A-9D53-81DB1B529289</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>0</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/sh</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>548.000000:184.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.workflow</string>
+	</dict>
+</dict>
+</plist>

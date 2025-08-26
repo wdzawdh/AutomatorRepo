@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>523</string>
+	<key>AMApplicationVersion</key>
+	<string>2.10</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.1.1</string>
+				<key>AMApplication</key>
+				<array>
+					<string>访达</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict/>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Get Selected Finder Items 2.action</string>
+				<key>ActionName</key>
+				<string>获取所选的访达项目</string>
+				<key>ActionParameters</key>
+				<dict/>
+				<key>ActionRuntimeParameters</key>
+				<dict>
+					<key>temporary items path</key>
+					<string>/var/folders/6c/4zkz97sd0yxb6zblxqghmgnr0000gn/T/5B096492-07E7-4CA7-B592-F5B1E4F7072C/1/com.apple.Automator.GetSelectedFinderItems2</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.GetSelectedFinderItems2</string>
+				<key>CFBundleVersion</key>
+				<string>2.1.1</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryFilesAndFolders</string>
+				</array>
+				<key>Class Name</key>
+				<string>AMGetSelectedFinderItemsAction</string>
+				<key>InputUUID</key>
+				<string>C926A616-CAEC-4D3E-9EAA-138927818308</string>
+				<key>Keywords</key>
+				<array/>
+				<key>OutputUUID</key>
+				<string>380064F1-8AB7-4E53-B91E-B46DCC736A17</string>
+				<key>UUID</key>
+				<string>3B5F40A6-3A77-41B5-9BBC-CCFC8319A804</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Finder</string>
+				</array>
+				<key>arguments</key>
+				<dict/>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>207.000000:68.000000</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>2.0.3</string>
+				<key>AMApplication</key>
+				<array>
+					<string>自动操作</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<dict/>
+					<key>CheckedForUserDefaultShell</key>
+					<dict/>
+					<key>inputMethod</key>
+					<dict/>
+					<key>shell</key>
+					<dict/>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.string</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run Shell Script.action</string>
+				<key>ActionName</key>
+				<string>运行Shell脚本</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/bash
+
+# 设置PATH环境变量，确保能找到系统命令
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH"
+
+# 获取Android设备当前顶部Activity类名的脚本
+# 使用方法: ./get_top_activity.sh
+
+# 查找adb命令位置
+ADB_PATH=""
+
+# 常见的adb路径
+POSSIBLE_PATHS=(
+    "/usr/local/bin/adb"
+    "$HOME/Library/Android/sdk/platform-tools/adb"
+    "$HOME/Android/Sdk/platform-tools/adb"
+    "/opt/homebrew/bin/adb"
+    "$(/usr/bin/which adb 2&gt;/dev/null)"
+)
+
+# 查找可用的adb
+for path in "${POSSIBLE_PATHS[@]}"; do
+    if [[ -n "$path" &amp;&amp; -x "$path" ]]; then
+        ADB_PATH="$path"
+        break
+    fi
+done
+
+# 如果还是找不到，让用户手动指定
+if [[ -z "$ADB_PATH" ]]; then
+    dialog_text="未找到adb命令
+
+常见位置：
+• ~/Library/Android/sdk/platform-tools/adb
+• /usr/local/bin/adb
+• /opt/homebrew/bin/adb
+
+请检查adb是否已安装，或手动修改脚本中的路径"
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"ADB未找到\" buttons {\"确定\"} default button \"确定\" with icon stop"
+    exit 1
+fi
+
+# 检查设备连接状态
+device_count=$($ADB_PATH devices | /usr/bin/grep -c "device$")
+if [[ $device_count -eq 0 ]]; then
+    dialog_text="未检测到连接的Android设备
+
+请确保：
+• 设备已连接并开启USB调试
+• 已授权调试权限"
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"设备连接错误\" buttons {\"确定\"} default button \"确定\" with icon caution"
+    exit 1
+elif [[ $device_count -gt 1 ]]; then
+    /usr/bin/osascript -e "display dialog \"检测到多个设备，将使用第一个设备\" with title \"警告\" buttons {\"继续\"} default button \"继续\" with icon note"
+fi
+
+echo "正在获取顶部Activity信息..."
+
+# 执行adb命令获取顶部Activity信息
+result=$($ADB_PATH shell dumpsys activity activities | /usr/bin/grep -E "topResumedActivity|mResumedActivity" | /usr/bin/head -1)
+
+if [[ -z "$result" ]]; then
+    /usr/bin/osascript -e "display dialog \"未找到顶部Activity信息，可能设备未解锁或应用未运行\" with title \"获取失败\" buttons {\"确定\"} default button \"确定\" with icon caution"
+    exit 1
+fi
+
+# 提取Activity类名
+# 处理不同Android版本的输出格式
+if /bin/echo "$result" | /usr/bin/grep -q "topResumedActivity"; then
+    # Android 10+ 格式: topResumedActivity=ActivityRecord{xxx u0 package/activity t123}
+    activity_info=$(/bin/echo "$result" | /usr/bin/sed -n 's/.*topResumedActivity=ActivityRecord{[^}]*u[0-9]* \([^ ]*\) t[0-9]*}.*/\1/p')
+elif /bin/echo "$result" | /usr/bin/grep -q "mResumedActivity"; then
+    # 较早版本格式: mResumedActivity: ActivityRecord{xxx u0 package/activity t123}
+    activity_info=$(/bin/echo "$result" | /usr/bin/sed -n 's/.*mResumedActivity: ActivityRecord{[^}]*u[0-9]* \([^ ]*\) t[0-9]*}.*/\1/p')
+fi
+
+if [[ -n "$activity_info" ]]; then
+    # 分离包名和Activity类名
+    package_name=$(/bin/echo "$activity_info" | /usr/bin/cut -d'/' -f1)
+    activity_class=$(/bin/echo "$activity_info" | /usr/bin/cut -d'/' -f2)
+    
+    # 将结果复制到剪贴板
+    /bin/echo "$activity_info" | /usr/bin/pbcopy
+    
+    # 验证复制是否成功
+    clipboard_content=$(/usr/bin/pbpaste)
+    if [[ "$clipboard_content" == "$activity_info" ]]; then
+        clipboard_status="✓ 完整类名已复制到剪贴板"
+    else
+        clipboard_status="⚠ 复制到剪贴板失败"
+    fi
+    
+    # 使用AppleScript显示Dialog
+    dialog_text="当前顶部Activity信息:
+
+完整类名: $activity_info
+包名: $package_name
+Activity: $activity_class
+
+$clipboard_status"
+    
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"Android Top Activity\" buttons {\"确定\"} default button \"确定\" with icon note"
+else
+    # 显示错误Dialog
+    /usr/bin/osascript -e "display dialog \"无法解析Activity信息\" with title \"错误\" buttons {\"确定\"} default button \"确定\" with icon stop"
+    /bin/echo "原始输出："
+    /bin/echo "$result"
+fi</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/bin/zsh</string>
+					<key>source</key>
+					<string></string>
+				</dict>
+				<key>ActionRuntimeParameters</key>
+				<dict>
+					<key>COMMAND_STRING</key>
+					<string>#!/bin/bash
+
+# 设置PATH环境变量，确保能找到系统命令
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/homebrew/bin:$PATH"
+
+# 获取Android设备当前顶部Activity类名的脚本
+# 使用方法: ./get_top_activity.sh
+
+# 查找adb命令位置
+ADB_PATH=""
+
+# 常见的adb路径
+POSSIBLE_PATHS=(
+    "/usr/local/bin/adb"
+    "$HOME/Library/Android/sdk/platform-tools/adb"
+    "$HOME/Android/Sdk/platform-tools/adb"
+    "/opt/homebrew/bin/adb"
+    "$(/usr/bin/which adb 2&gt;/dev/null)"
+)
+
+# 查找可用的adb
+for path in "${POSSIBLE_PATHS[@]}"; do
+    if [[ -n "$path" &amp;&amp; -x "$path" ]]; then
+        ADB_PATH="$path"
+        break
+    fi
+done
+
+# 如果还是找不到，让用户手动指定
+if [[ -z "$ADB_PATH" ]]; then
+    dialog_text="未找到adb命令
+
+常见位置：
+• ~/Library/Android/sdk/platform-tools/adb
+• /usr/local/bin/adb
+• /opt/homebrew/bin/adb
+
+请检查adb是否已安装，或手动修改脚本中的路径"
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"ADB未找到\" buttons {\"确定\"} default button \"确定\" with icon stop"
+    exit 1
+fi
+
+# 检查设备连接状态
+device_count=$($ADB_PATH devices | /usr/bin/grep -c "device$")
+if [[ $device_count -eq 0 ]]; then
+    dialog_text="未检测到连接的Android设备
+
+请确保：
+• 设备已连接并开启USB调试
+• 已授权调试权限"
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"设备连接错误\" buttons {\"确定\"} default button \"确定\" with icon caution"
+    exit 1
+elif [[ $device_count -gt 1 ]]; then
+    /usr/bin/osascript -e "display dialog \"检测到多个设备，将使用第一个设备\" with title \"警告\" buttons {\"继续\"} default button \"继续\" with icon note"
+fi
+
+echo "正在获取顶部Activity信息..."
+
+# 执行adb命令获取顶部Activity信息
+result=$($ADB_PATH shell dumpsys activity activities | /usr/bin/grep -E "topResumedActivity|mResumedActivity" | /usr/bin/head -1)
+
+if [[ -z "$result" ]]; then
+    /usr/bin/osascript -e "display dialog \"未找到顶部Activity信息，可能设备未解锁或应用未运行\" with title \"获取失败\" buttons {\"确定\"} default button \"确定\" with icon caution"
+    exit 1
+fi
+
+# 提取Activity类名
+# 处理不同Android版本的输出格式
+if /bin/echo "$result" | /usr/bin/grep -q "topResumedActivity"; then
+    # Android 10+ 格式: topResumedActivity=ActivityRecord{xxx u0 package/activity t123}
+    activity_info=$(/bin/echo "$result" | /usr/bin/sed -n 's/.*topResumedActivity=ActivityRecord{[^}]*u[0-9]* \([^ ]*\) t[0-9]*}.*/\1/p')
+elif /bin/echo "$result" | /usr/bin/grep -q "mResumedActivity"; then
+    # 较早版本格式: mResumedActivity: ActivityRecord{xxx u0 package/activity t123}
+    activity_info=$(/bin/echo "$result" | /usr/bin/sed -n 's/.*mResumedActivity: ActivityRecord{[^}]*u[0-9]* \([^ ]*\) t[0-9]*}.*/\1/p')
+fi
+
+if [[ -n "$activity_info" ]]; then
+    # 分离包名和Activity类名
+    package_name=$(/bin/echo "$activity_info" | /usr/bin/cut -d'/' -f1)
+    activity_class=$(/bin/echo "$activity_info" | /usr/bin/cut -d'/' -f2)
+    
+    # 将结果复制到剪贴板
+    /bin/echo "$activity_info" | /usr/bin/pbcopy
+    
+    # 验证复制是否成功
+    clipboard_content=$(/usr/bin/pbpaste)
+    if [[ "$clipboard_content" == "$activity_info" ]]; then
+        clipboard_status="✓ 完整类名已复制到剪贴板"
+    else
+        clipboard_status="⚠ 复制到剪贴板失败"
+    fi
+    
+    # 使用AppleScript显示Dialog
+    dialog_text="当前顶部Activity信息:
+
+完整类名: $activity_info
+包名: $package_name
+Activity: $activity_class
+
+$clipboard_status"
+    
+    /usr/bin/osascript -e "display dialog \"$dialog_text\" with title \"Android Top Activity\" buttons {\"确定\"} default button \"确定\" with icon note"
+else
+    # 显示错误Dialog
+    /usr/bin/osascript -e "display dialog \"无法解析Activity信息\" with title \"错误\" buttons {\"确定\"} default button \"确定\" with icon stop"
+    /bin/echo "原始输出："
+    /bin/echo "$result"
+fi</string>
+					<key>CheckedForUserDefaultShell</key>
+					<true/>
+					<key>inputMethod</key>
+					<integer>1</integer>
+					<key>shell</key>
+					<string>/bin/zsh</string>
+					<key>source</key>
+					<string></string>
+					<key>temporary items path</key>
+					<string>/var/folders/6c/4zkz97sd0yxb6zblxqghmgnr0000gn/T/5B096492-07E7-4CA7-B592-F5B1E4F7072C/1/com.apple.RunShellScript</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.RunShellScript</string>
+				<key>CFBundleVersion</key>
+				<string>2.0.3</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunShellScriptAction</string>
+				<key>InputUUID</key>
+				<string>831E0D22-6E3F-4386-947B-AA623E13A1F2</string>
+				<key>Keywords</key>
+				<array>
+					<string>Shell</string>
+					<string>脚本</string>
+					<string>命令</string>
+					<string>运行</string>
+					<string>Unix</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>C321291A-50BE-47DA-B42A-1105806D49F9</string>
+				<key>UUID</key>
+				<string>15414305-20E3-46DC-A262-67C62E1BC246</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<integer>0</integer>
+						<key>name</key>
+						<string>inputMethod</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>CheckedForUserDefaultShell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+					<key>2</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>2</string>
+					</dict>
+					<key>3</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>COMMAND_STRING</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>3</string>
+					</dict>
+					<key>4</key>
+					<dict>
+						<key>default value</key>
+						<string>/bin/sh</string>
+						<key>name</key>
+						<string>shell</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>4</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<integer>1</integer>
+				<key>location</key>
+				<string>548.000000:249.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict>
+		<key>A810BF2A-EAFF-443F-ACBE-2805F8925E4D</key>
+		<dict>
+			<key>from</key>
+			<string>3B5F40A6-3A77-41B5-9BBC-CCFC8319A804 - 3B5F40A6-3A77-41B5-9BBC-CCFC8319A804</string>
+			<key>to</key>
+			<string>15414305-20E3-46DC-A262-67C62E1BC246 - 15414305-20E3-46DC-A262-67C62E1BC246</string>
+		</dict>
+	</dict>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.workflow</string>
+	</dict>
+</dict>
+</plist>
